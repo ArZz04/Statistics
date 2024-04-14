@@ -1,25 +1,48 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class ReaderCSV {
-    public static void main(String[] args) throws FileNotFoundException {
-        String path = "./data/ltickets.csv";
-        String line = "";
+
+    private float[] x;
+
+    public ReaderCSV() {
+        String path = "./data/tickets.csv";
+        String line;
         int counter = 0;
-        try{
-            BufferedReader br = new BufferedReader(new FileReader(path));
-            while ((line = br.readLine()) != null){
-                String[] values = line.split(",");
-                System.out.println(values[0]);
-                counter += 1;
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+
+            // Count the lines in the file to determine the size of the array
+            int lineCount = 0;
+            while (br.readLine() != null) {
+                lineCount++;
             }
 
-            System.out.println("-----------------------------------------");
-            System.out.println("Son: " + counter + " tickets en el csv...");
-        } catch (IOException e){
-            System.out.println(e);
+            // Initialize the array with the appropriate size
+            x = new float[lineCount];
+
+            // Column 'AMOUNT'
+            int dataToGet = 7;
+
+            while ((line = br.readLine()) != null) {
+
+                // Correct dataset values
+                String[] values = line.split(",");
+                String amountStr = values[dataToGet].replace("\"", "");
+                float amount = Float.parseFloat(amountStr);
+
+                // Add values to the dataset
+                x[counter] = amount;
+
+                counter++;
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    public float[] getX() {
+        return x;
     }
 }
