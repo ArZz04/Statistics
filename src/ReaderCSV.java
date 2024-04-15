@@ -21,10 +21,14 @@ public class ReaderCSV {
             // Initialize the array with the appropriate size
             x = new float[lineCount];
 
+            // Reset the buffered reader to read from the beginning of the file
+            br.close();
+            BufferedReader bR = new BufferedReader(new FileReader(path));
+
             // Column 'AMOUNT'
             int dataToGet = 7;
 
-            while ((line = br.readLine()) != null) {
+            while ((line = bR.readLine()) != null) {
 
                 // Correct dataset values
                 String[] values = line.split(",");

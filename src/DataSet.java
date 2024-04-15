@@ -12,4 +12,8 @@ public class DataSet {
     public float[] getX() {
         return this.x;
     }
+
+    public float[] getXOrdered {
+
+    }
 }
