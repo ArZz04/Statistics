@@ -1,8 +1,7 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class DataSet {
-    private float x[];
+    private final float[] x;
+    public double[] getXOrdered;
+    private float[] xOrdered;
 
     public DataSet(){
         ReaderCSV reader = new ReaderCSV();
@@ -13,7 +12,13 @@ public class DataSet {
         return this.x;
     }
 
-    public float[] getXOrdered {
+    public float[] setXOrdered(float[] xOrdered){
+        this.xOrdered = xOrdered;
+        return xOrdered;
+    }
 
+    public float[] getXOrdered() {
+        this.xOrdered = Functions.matchSort(this.x);
+        return this.xOrdered;
     }
 }

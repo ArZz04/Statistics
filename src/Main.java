@@ -3,22 +3,18 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-
-
         DataSet DS = new DataSet();
 
-        /*
-        int n = 0;
-        // Imprimir el valor de x
-        System.out.println("Valores de x: ");
-        for (float value : DS.getX()) {
-            n++;
-            System.out.println(n + " " + value);
-        }
-        */
+        int[] f = {  };
+        int[] dotHalf = { /* valores de punto medio */ };
+        int[] Cfre = { /* valores de frecuencia acumulada */ };
+        int[] fAcu = { /* valores de frecuencia relativa */ };
+        int[] fRel = { /* valores de frecuencia relativa acumulada */ };
+        int[] fRelAcu = { /* valores de porcentaje */ };
+        int[] x = { /* valores de las clases */ };
 
-        System.out.println("Clases a hacer: " + Functions.clasesSturges());
-        System.out.println("Rango de clases: " + Functions.range());
-        System.out.println("Intervalo de clases: " + Functions.interval());
+        // Llama a la función printTable y pasa los arreglos como argumentos
+        Functions.printTable(f, dotHalf, Cfre, fAcu, fRel, fRelAcu, x);
     }
+
 }
