@@ -1,6 +1,6 @@
+
 public class DataSet {
-    private final float[] x;
-    public double[] getXOrdered;
+    private float[] x;
     private float[] xOrdered;
 
     public DataSet(){
