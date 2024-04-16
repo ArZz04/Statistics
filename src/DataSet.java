@@ -12,9 +12,8 @@ public class DataSet {
         return this.x;
     }
 
-    public float[] setXOrdered(float[] xOrdered){
+    public void setXOrdered(float[] xOrdered) {
         this.xOrdered = xOrdered;
-        return xOrdered;
     }
 
     public float[] getXOrdered() {
