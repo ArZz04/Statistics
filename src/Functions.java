@@ -6,8 +6,17 @@ public class Functions {
     private static int r = 0;
     private static int c = 0;
 
-    private static float limSuperior;
-    private static float limInferior;
+
+    static DataSet DS = new DataSet();
+    static float[] x = DS.getXOrdered();
+
+    static int numClasses = Sturges(); // Obtener el número de clases
+    static int n = x.length;
+
+    static float[] classLimits = calculateClassLimits(x, numClasses);
+    static int[] cumulativeFrequencies = new int[numClasses];
+    static float[] midPoints = new float[numClasses];
+
 
     public static float[] matchSort(float[] x) {
         DataSet DS = new DataSet();
@@ -53,10 +62,11 @@ public class Functions {
         DataSet DS = new DataSet();
         float[] x = DS.getXOrdered();
         int n = x.length;
-
         int numClasses = Sturges();
-        int[] frequencies = new int[numClasses]; // Array para almacenar las frecuencias de cada clase
-        float[] classLimits = calculateClassLimits(x, numClasses); // Calcula los límites de clase
+
+        int[] frequencies = new int[numClasses];
+        //Defines los limites de la classLimits
+        float[] classLimits = calculateClassLimits(x, numClasses);
 
         // Contar la frecuencia de cada intervalo de clase
         for (int i = 0; i < n; i++) {
@@ -86,32 +96,24 @@ public class Functions {
         return classLimits;
     }
 
-
     // ------------------------------------------------------------
 
     public static void printTable() {
         System.out.println("-------------------------------------------------");
         System.out.println("N. Clase |      Clase      | Frecuencia | Punto Medio | Frecuencia Acumulada | Frecuencia Relativa | Frecuencia Relativa Acumulada | Porcentaje");
 
-        int numClasses = Sturges(); // Obtener el número de clases
-        DataSet DS = new DataSet();
-        float[] x = DS.getXOrdered();
-        int n = x.length;
         int iClases = n / numClasses;
 
         // Calcular la frecuencia de cada clase
         int[] frequencies = frequency();
 
-        // Calcular el punto medio de cada clase y la frecuencia acumulada
-        float[] classLimits = calculateClassLimits(x, numClasses);
-        int[] cumulativeFrequencies = new int[numClasses];
-        float[] midPoints = new float[numClasses];
         int cumulativeFrequency = 0;
+
         for (int i = 0; i < numClasses; i++) {
             int startIndex = i * iClases; // Calcular el índice de inicio del intervalo
             int endIndex = (i + 1) * iClases - 1; // Calcular el índice de fin del intervalo
 
-            // Manejar el último intervalo, ya que podría haber menos elementos que el tamaño de la clase
+            // Manejar el último intervalo
             if (i == numClasses - 1) {
                 endIndex = n - 1;
             }
@@ -121,11 +123,16 @@ public class Functions {
 
             // Calcular la frecuencia acumulada
             cumulativeFrequency += frequencies[i];
-            cumulativeFrequencies[i] = cumulativeFrequency;
+            cumulativeFrequencies[i] = cumulativeFrequency; // Actualizar la frecuencia acumulada
 
-            System.out.printf( " " + (i+1) + "  | %10d al %d | %10d | %12.2f | %20d | %18.4f | %30d | %10.2f%%\n",
+            float cumulativeRelativeFrequency = (float) cumulativeFrequency / n;
+
+            // Calcular el porcentaje basado en la frecuencia acumulada total
+            float percent = ((float) frequencies[i] / n) * 100;
+
+            System.out.printf(" " + (i + 1) + "  | %10d al %d | %10d | %12.2f | %20d | %18.4f | %30.4f | %10.2f%%\n",
                     (startIndex + 1), (endIndex + 1), frequencies[i], midPoints[i], cumulativeFrequencies[i],
-                    (float)frequencies[i] / n * 100, cumulativeFrequencies[i], (float)cumulativeFrequencies[i] / n * 100);
+                    (float) frequencies[i] / n, cumulativeRelativeFrequency, percent);
         }
     }
 }
